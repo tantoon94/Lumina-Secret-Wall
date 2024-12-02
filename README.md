@@ -2,4 +2,4 @@
 This project is designed for the [CASA0014 Connected Environments](https://github.com/ucl-casa-ce/casa0014) module to build an IoT device to control The [Chrono Lumina](https://github.com/ucl-casa-ce/casa0014/tree/main/chronoLumina) LED lights through an MQTT broker at CASA, UCL. This Wall is an IoT device that can control the Chrono Lumina via six LDR sensors placed inside six projected hexagons. The nodes on each hexagon correspond to the placement of six LED numbers on Chrono Lumina. By Shedding light on any hexagon's LDR sensor (with a kind of flashlight), six corresponding LEDs will light up five of them are white and one is in another colour. The wall code could be deciphered by identifying the coloured LED numbers and putting them together in order. 
 
 
-![TheFabricated Lumina wall](https://github.com/user-attachments/assets/8a08519a-d854-4a38-aaf9-e91a7540a652)
+![TheFabricated Lumina wall](https://github.com/user-attachments/assets/bad94a49-4777-40f6-bd4e-9a7a83f36f9f)
