@@ -16,9 +16,8 @@ This project is designed for the [CASA0014 Connected Environments](https://githu
 ## Libraries
 Make sure to include the following libraries in your Arduino IDE:
 
-1. Servo.h
-2. Adafruit_NeoPixel.h 
-3. ArduinoFFT.h
+1. WiFiNINA
+2. PubSubClient
 
 ## Setup Instructions
 
