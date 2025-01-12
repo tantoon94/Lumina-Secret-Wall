@@ -1,8 +1,9 @@
 # Lumina-Secret-Wall
 This project is designed for the [CASA0014 Connected Environments](https://github.com/ucl-casa-ce/casa0014) module to build an IoT device to control The [Chrono Lumina](https://github.com/ucl-casa-ce/casa0014/tree/main/chronoLumina) LED lights at CASA, UCL, through an MQTT broker. This Wall is an IoT device that can control the Chrono Lumina via six LDR sensors placed inside six projected hexagons. The nodes on each hexagon correspond to the placement of six LED numbers on Chrono Lumina. By Shedding light on any hexagon's LDR sensor (with any kind of flashlight), six corresponding LEDs will light up five showing the intensity of the flashlight using a gradient of cold to warm colours and one only white indicating a piece of code to decipher. The wall's final code could be deciphered by identifying the coloured LED numbers and putting them together in order. 
 
-
-![TheFabricated Lumina wall](https://github.com/user-attachments/assets/bad94a49-4777-40f6-bd4e-9a7a83f36f9f)
+<p align="center">
+<img src="https://github.com/user-attachments/assets/bad94a49-4777-40f6-bd4e-9a7a83f36f9f" alt="The Fabricated Lumina wall" style="width:50%;">
+</p>
 
 ## Components
 
@@ -19,35 +20,52 @@ Make sure to include the following libraries in your Arduino IDE:
 1. WiFiNINA
 2. PubSubClient
 
+## The project GuideMap
+
+ The schematic model for devopling the device based on Chrono Lumina can be helpful in understanding the posisioning of the LEDs. Furthermore, it can be used to understand the Arrays defined in the code. To test the code without publishing to the broker, use the latest [Test](https://github.com/tantoon94/Lumina-Secret-Wall/blob/main/Arduino_Sketch/Test_sun_6pm/Test_sun_6pm.ino) version using the Arduino serial terminal to for debugging. 
+<p align="center">
+<img src="https://github.com/tantoon94/Lumina-Secret-Wall/blob/main/Images/LuminaWallGuide.png" alt="The Lumina Wall Guide" style="width:60%; center">
+</p>
+
 ## Setup Instructions
 
-* Connect the LDR sensors to the Arduino MKR 1010: A0,
-* Connect the linear servo motor to the Arduino: Pin 9
-* Connect the rotary servo motor to the Arduino: Pin 10
-* Connect the NeoPixel LED strip to the Arduino: Pin 5
-* Connect the push button to the Arduino: Pin 2 (Use a pull-up resistor (10kΩ) between pin 2 and 5V)
-* Upload the provided Arduino code to your board.
+### Circuit Connections:
+1. **Power Supply:**
+   - Connect the `3.3V` pin on the MKR 1010 to the positive rail on the breadboard.
+   - Connect the `GND` pin on the MKR 1010 to the negative rail on the breadboard.
 
-## The Design 
+2. **LDR and Resistor Setup:**
+   - For each LDR, connect one end to the positive rail (`3.3V`).
+   - Connect the other end of each LDR to one end of a `10-ohm` resistor.
+   - Connect the other end of each `10-ohm` resistor to the negative rail (`GND`).
 
-The device works by pressing an illuminated push button. while pushed, a green LED light turns on indicating the active recording. Meanwhile, the disc begins to rotate steadily via a continuous 360-degree servo and the microphone will input the recorded sound as a value between 500-900 (out of a possible 0-1023) to the Arduino. After processing the sound and extracting the amplitude value, it will be mapped to an angle of 0-180 that will drive a 180-degree servo attached to a linear gear holding the pen making it move linearly drawing on the rotary canvas. When the button is released, the LED light will go off and so will the servos and the result of the recorded sound will be a circular shape drawn on a removable disc. 
+3. **Analog Input Connections:**
+   - Connect the junction between each LDR and its corresponding `10-ohm` resistor to an analog input pin on the MKR 1010 (e.g., `A0`, `A1`, `A2`, etc.).
 
-## Hindrances & Issues
+<p align="center">
+  <img src="https://github.com/tantoon94/Lumina-Secret-Wall/blob/main/Images/Crit.jpg" alt="The Fabricated Lumina wall" style="width:20%">
+</p>
 
-1. The noise the servos produce could affect the microphone's input. 
-2. The pin can record only one feature of the sound (amplitude) and not different frequency levels.
-3. The design of the pin holder is not flexible making it difficult to remove and replace the disc.
-4. The screw for the lid of the disc holder base does not entirely fit when printed out. 
+### Design
+ Using the [Model](https://github.com/tantoon94/Lumina-Secret-Wall/tree/main/MODEL) folder you can access the 3D models of the project. 
+ The [G-code](https://github.com/tantoon94/Lumina-Secret-Wall/tree/main/MODEL/3Dprint/G-code) for the printing settings are available in the same directory. 
 
-## Further Developments
-How can the servo noise issues be fixed? 
-  - You can adjust the sensitivity of the microphone by turning the small screw located in the back of the sensor counterclockwise.
-  - You can use capacitors in parallel to the microphone to smooth out the noise
-  - Alternatively, you can adjust the threshold of the microphone's input in the Arduino code
-What are the features that could be improved? How can they be improved?
-  - The location of the microphone in the design is not ideal for recording sound. It could be placed in an isolated compartment on top of the device. Alternatively, the microphone could be separated entirely from the device and connected to it through a wireless network connection. 
-What are the missing features?
-  - The current version of this device only records one parameter of sound, the amplitude. Using multiple pins capturing different frequencies can help develop the device further in future versions.
+**MQTT Broker and LED Control:**
+- Utilized an MQTT broker to publish instructions for controlling the color and on/off status of each LED pixel (12 pixels per LED string).
+- Controlled 6 LEDs with one LDR using a matrix array to hold each LED number and their respective pixels.
+- Managed simultaneous messages to shared LEDs, prioritizing messages where the threshold was crossed.
+- Ensured LEDs turned off when below the threshold.
+ 
+### Limitations 
+
+**Sensor Calibration:**
+- Calibrating sensors for varying light conditions was challenging.
+- Using a `10Ω` resistor reduced the sensors' sensitivity, helping distinguish between environmental and flashlight light.
+- Designed hexagon modular shapes with a three-pointed star crack to minimize environmental light while allowing sufficient flashlight light.
+- Aimed to find the perfect balance between too much and too little light.
+
+
+
 
 
 ##  Contact Details
